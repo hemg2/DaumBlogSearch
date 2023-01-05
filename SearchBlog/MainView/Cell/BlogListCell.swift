@@ -12,7 +12,7 @@ import Kingfisher
 
 
 final class BlogListCell: UITableViewCell {
-    let thumbnailIamgeView = UIImageView()
+    let thumbnailImageView = UIImageView()
     let nameLabel = UILabel()
     let titleLabel = UILabel()
     let datetimeLabel = UILabel()
@@ -21,51 +21,45 @@ final class BlogListCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        thumbnailIamgeView.contentMode = .scaleAspectFit
+        thumbnailImageView.contentMode = .scaleAspectFit
         nameLabel.font = .systemFont(ofSize: 18, weight: .bold)
         titleLabel.font = .systemFont(ofSize: 14)
         titleLabel.numberOfLines = 2
         
         datetimeLabel.font = .systemFont(ofSize: 12, weight: .light)
         
-        [thumbnailIamgeView, nameLabel, titleLabel, datetimeLabel].forEach {
-            addSubview($0)
+        [thumbnailImageView, nameLabel, titleLabel, datetimeLabel].forEach {
+            contentView.addSubview($0)
         }
-        
-        
         
         nameLabel.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(8)
-            $0.trailing.lessThanOrEqualTo(thumbnailIamgeView.snp.leading).offset(-8)
+            $0.trailing.lessThanOrEqualTo(thumbnailImageView.snp.leading).offset(-8)
         }
         
-        
-        thumbnailIamgeView.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(8)
-            $0.leading.equalTo(nameLabel)
-            $0.trailing.bottom.equalToSuperview().inset(8)
+        thumbnailImageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.top.trailing.bottom.equalToSuperview().inset(8)
             $0.width.height.equalTo(80)
         }
         
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(nameLabel.snp.bottom).offset(8)
             $0.leading.equalTo(nameLabel)
-            $0.trailing.equalTo(thumbnailIamgeView.snp.leading).offset(-8)
+            $0.trailing.equalTo(thumbnailImageView.snp.leading).offset(-8)
         }
-        
-   
         
         datetimeLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(8)
             $0.leading.equalTo(nameLabel)
             $0.trailing.equalTo(titleLabel)
-            $0.bottom.equalTo(thumbnailIamgeView)
+            $0.bottom.equalTo(thumbnailImageView)
         }
     }
     
     func setData(_ data: BlogListCellData) {
         
-        thumbnailIamgeView.kf.setImage(with: data.thumbnailURL, placeholder: UIImage(systemName: "photo"))
+        thumbnailImageView.kf.setImage(with: data.thumbnailURL, placeholder: UIImage(systemName: "photo"))
         nameLabel.text = data.name
         titleLabel.text = data.tilte
         

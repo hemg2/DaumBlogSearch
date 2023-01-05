@@ -16,7 +16,7 @@ final class MainViewContoller: UIViewController {
     let listView = BlogListView()
     let alertActionTapped = PublishRelay<AlertAction>()
     //    알럿을 전달해준다
-    let apikey = "e88ec31b2d9da9e801e939b34db4caf4"
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
