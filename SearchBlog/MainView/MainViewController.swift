@@ -14,13 +14,11 @@ final class MainViewContoller: UIViewController {
     let disposeBag = DisposeBag() //할당
     let searchBar = SearchBar()
     let listView = BlogListView()
-    let alertActionTapped = PublishRelay<AlertAction>()
-    //    알럿을 전달해준다
+ 
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
-        bind()
         attribute()
         layout()
     }
@@ -30,83 +28,13 @@ final class MainViewContoller: UIViewController {
     }
     
     
-    private func bind() {
-        let blogResult = searchBar.shouldLoadResult
-            .flatMapLatest { query in
-                SearchBlogNetwork().searchBlog(query: query)
-            }
-            .share()
-        
-        let blogValue = blogResult
-            .compactMap { data -> DKBlog? in
-                guard case .success(let value) = data else {
-                    return nil
-                }
-                return value
-            }
-        
-        let blogError = blogResult
-            .compactMap { data -> String? in
-                guard case .failure(let error) = data else {
-                    return nil
-                }
-                return error.localizedDescription
-            }
-        
-        let cellData = blogValue
-            .map { blog -> [BlogListCellData] in
-                return blog.documents
-                    .map { doc in
-                        let thumbnailURL = URL(string: doc.thumbnail ?? "")
-                        return BlogListCellData(thumbnailURL: thumbnailURL, name: doc.name, tilte: doc.title, datetime: doc.datetime)
-                    }
-            }
-        
-        let sortedType = alertActionTapped
-            .filter {
-                switch $0 {
-                case .title, .datetime:
-                    return true
-                default:
-                    return false
-                }
-            }
-            .startWith(.title)
-        
-        
-        Observable.combineLatest(sortedType, cellData) { type, data -> [BlogListCellData] in
-            switch type {
-            case .title:
-                return data.sorted { $0.tilte ?? "" < $1.tilte ?? "" }
-            case .datetime:
-                return data.sorted { $0.datetime ?? Date() > $1.datetime ?? Date() }
-            default:
-                return data
-            }
-        }
-        .bind(to: listView.cellData)
-        .disposed(by: disposeBag)
-        
-        
-        let alertShhetForSorting = listView.headerView.sortButtonTapped
-            .map { _ -> Alert in
-                return (title: nil, message: nil, actions: [.title, .datetime, .cancel], style: .actionSheet)
-            }
-        
-        let alertForErrorMessage = blogError
-            . map { message -> Alert in
-                return (title: "앗!", message: "예상치 못한 오류가 발생했습니다. 잠시후 다시 시도 해주세요. \(message)",
-                        actions: [.confirm],
-                        style: .alert)
-            }
-        
-        Observable.merge(alertShhetForSorting, alertForErrorMessage)
-            .asSignal(onErrorSignalWith: .empty())
+    func bind(_ viewModel: MainViewModel) {
+        viewModel.shouldPresentAlert
             .flatMapLatest { alert -> Signal<AlertAction> in
                 let alertController = UIAlertController(title: alert.title, message: alert.message, preferredStyle: alert.style)
                 return self.presentAlertController(alertController, actions: alert.actions)
             }
-            .emit(to: alertActionTapped)
+            .emit(to: viewModel.alertActionTapped)
             .disposed(by: disposeBag)
     }
     
