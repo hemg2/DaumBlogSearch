@@ -12,6 +12,6 @@ import Foundation
 struct BlogListCellData {
     let thumbnailURL: URL?
     let name: String?
-    let tilte: String
-    let dateTime: Date?
+    let tilte: String?
+    let datetime: Date?
 }

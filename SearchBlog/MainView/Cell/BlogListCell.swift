@@ -15,7 +15,7 @@ final class BlogListCell: UITableViewCell {
     let thumbnailIamgeView = UIImageView()
     let nameLabel = UILabel()
     let titleLabel = UILabel()
-    let dateTimeLabel = UILabel()
+    let datetimeLabel = UILabel()
     
     
     override func layoutSubviews() {
@@ -26,16 +26,20 @@ final class BlogListCell: UITableViewCell {
         titleLabel.font = .systemFont(ofSize: 14)
         titleLabel.numberOfLines = 2
         
-        dateTimeLabel.font = .systemFont(ofSize: 12, weight: .light)
+        datetimeLabel.font = .systemFont(ofSize: 12, weight: .light)
         
-        [thumbnailIamgeView, nameLabel, titleLabel, dateTimeLabel].forEach {
+        [thumbnailIamgeView, nameLabel, titleLabel, datetimeLabel].forEach {
             addSubview($0)
         }
+        
+        
         
         nameLabel.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(8)
             $0.trailing.lessThanOrEqualTo(thumbnailIamgeView.snp.leading).offset(-8)
         }
+        
+        
         thumbnailIamgeView.snp.makeConstraints {
             $0.top.equalTo(nameLabel.snp.bottom).offset(8)
             $0.leading.equalTo(nameLabel)
@@ -47,10 +51,11 @@ final class BlogListCell: UITableViewCell {
             $0.top.equalTo(nameLabel.snp.bottom).offset(8)
             $0.leading.equalTo(nameLabel)
             $0.trailing.equalTo(thumbnailIamgeView.snp.leading).offset(-8)
-            
         }
         
-        dateTimeLabel.snp.makeConstraints {
+   
+        
+        datetimeLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(8)
             $0.leading.equalTo(nameLabel)
             $0.trailing.equalTo(titleLabel)
@@ -65,13 +70,13 @@ final class BlogListCell: UITableViewCell {
         titleLabel.text = data.tilte
         
         
-        var dateTime: String {
+        var datetime: String {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy년 MM월 dd일"
-            let contenDate = data.dateTime ?? Date()
+            let contenDate = data.datetime ?? Date()
             
             return dateFormatter.string(from: contenDate)
         }
-        dateTimeLabel.text = dateTime
+        datetimeLabel.text = datetime
     }
 }
