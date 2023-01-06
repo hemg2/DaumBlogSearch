@@ -21,38 +21,20 @@ struct MainViewModel {
     
     let shouldPresentAlert: Signal<MainViewContoller.Alert>
     
-    init () {
+    init(model: MainModel = MainModel()) {
         let blogResult = searchBarViewModel.shouldLoadResult
-            .flatMapLatest { query in
-                SearchBlogNetwork().searchBlog(query: query)
-            }
+            .flatMapLatest(model.searchBlog)
             .share()
         
         let blogValue = blogResult
-            .compactMap { data -> DKBlog? in
-                guard case .success(let value) = data else {
-                    return nil
-                }
-                return value
-            }
+            .compactMap(model.getBlogValue)
         
         let blogError = blogResult
-            .compactMap { data -> String? in
-                guard case .failure(let error) = data else {
-                    return nil
-                }
-                return error.localizedDescription
-            }
+            .compactMap(model.getBlogError)
         
         
         let cellData = blogValue
-            .map { blog -> [BlogListCellData] in
-                return blog.documents
-                    .map { doc in
-                        let thumbnailURL = URL(string: doc.thumbnail ?? "")
-                        return BlogListCellData(thumbnailURL: thumbnailURL, name: doc.name, tilte: doc.title, datetime: doc.datetime)
-                    }
-            }
+            .compactMap(model.getBlogListCellData)
         
         let sortedType = alertActionTapped
             .filter {
@@ -66,22 +48,14 @@ struct MainViewModel {
             .startWith(.title)
         
         
-        Observable.combineLatest(sortedType, cellData) { type, data -> [BlogListCellData] in
-            switch type {
-            case .title:
-                return data.sorted { $0.tilte ?? "" < $1.tilte ?? "" }
-            case .datetime:
-                return data.sorted { $0.datetime ?? Date() > $1.datetime ?? Date() }
-            default:
-                return data
-            }
-        }
+        Observable
+            .combineLatest(sortedType, cellData, resultSelector: (model.sort))
         .bind(to: blogListViewModel.blogCellData)
         .disposed(by: disposBag)
         
         
         let alertShhetForSorting =
-        blogListViewModel.filterViewModel.srtButtonTapped
+        blogListViewModel.filterViewModel.sortButtonTapped
             .map { _ -> MainViewContoller.Alert in
                 return (title: nil, message: nil, actions: [.title, .datetime, .cancel], style: .actionSheet)
             }

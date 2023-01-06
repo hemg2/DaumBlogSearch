@@ -29,6 +29,8 @@ final class MainViewContoller: UIViewController {
     
     
     func bind(_ viewModel: MainViewModel) {
+        listView.bind(viewModel.blogListViewModel)
+        searchBar.bind(viewModel.searchBarViewModel)
         viewModel.shouldPresentAlert
             .flatMapLatest { alert -> Signal<AlertAction> in
                 let alertController = UIAlertController(title: alert.title, message: alert.message, preferredStyle: alert.style)

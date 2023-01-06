@@ -28,7 +28,8 @@ final class BlogListView: UITableView {
     }
     
     func bind(_ viewModel: BlogListViewModel) {
-        // cellforRowat 이 데이타 소스 메소드가 RX에서는 이렇게 쓰인다.
+        
+        headerView.bind(viewModel.filterViewModel)
         viewModel.cellData.asDriver(onErrorJustReturn: []).drive(self.rx.items) {
             tv, row, data in
             let index = IndexPath(row: row, section: 0)

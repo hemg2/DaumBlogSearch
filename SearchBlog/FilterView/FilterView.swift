@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-final class FilterView: UITableViewHeaderFooterView {
+class FilterView: UITableViewHeaderFooterView {
     let disposeBag = DisposeBag()
     
     
@@ -24,7 +24,7 @@ final class FilterView: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
         
         
-        bind()
+
         attribute()
         layout()
     }
@@ -32,7 +32,7 @@ final class FilterView: UITableViewHeaderFooterView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private func bind() {
+    func bind(_ viewModel: FilterViewModel) {
         sortButton.rx.tap
             .bind(to: sortButtonTapped)
             .disposed(by: disposeBag)

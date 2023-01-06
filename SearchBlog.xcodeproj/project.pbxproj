@@ -30,6 +30,7 @@
 		6399AD81296719C400E938B6 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6399AD80296719C400E938B6 /* FilterViewModel.swift */; };
 		6399AD8429671D1D00E938B6 /* BlogListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6399AD8329671D1D00E938B6 /* BlogListViewModel.swift */; };
 		6399AD8729671ECC00E938B6 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6399AD8629671ECC00E938B6 /* MainViewModel.swift */; };
+		6399AD892967E84800E938B6 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6399AD882967E84800E938B6 /* MainModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		6399AD80296719C400E938B6 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 		6399AD8329671D1D00E938B6 /* BlogListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogListViewModel.swift; sourceTree = "<group>"; };
 		6399AD8629671ECC00E938B6 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		6399AD882967E84800E938B6 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +97,6 @@
 				6399AD642966ABA500E938B6 /* MainView */,
 				6399AD7D2967105100E938B6 /* ListView */,
 				6399AD672966ADBE00E938B6 /* SearchBarView */,
-				6399AD6E2966B8A400E938B6 /* BlogListCell */,
 				6399AD82296719CA00E938B6 /* FilterView */,
 				6399AD432966A99400E938B6 /* AppDelegate.swift */,
 				6399AD452966A99400E938B6 /* SceneDelegate.swift */,
@@ -111,6 +112,7 @@
 			children = (
 				6399AD652966ABB200E938B6 /* MainViewController.swift */,
 				6399AD8629671ECC00E938B6 /* MainViewModel.swift */,
+				6399AD882967E84800E938B6 /* MainModel.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				6399AD6C2966B89100E938B6 /* BlogList.swift */,
+				6399AD6E2966B8A400E938B6 /* BlogListCell */,
 			);
 			path = ListView;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				6399AD692966ADD100E938B6 /* SearchBar.swift in Sources */,
 				6399AD442966A99400E938B6 /* AppDelegate.swift in Sources */,
 				6399AD6B2966B6C000E938B6 /* FilterView.swift in Sources */,
+				6399AD892967E84800E938B6 /* MainModel.swift in Sources */,
 				6399AD462966A99400E938B6 /* SceneDelegate.swift in Sources */,
 				6399AD7F2967106800E938B6 /* SearchBarViewModel.swift in Sources */,
 				6399AD7C2966D31B00E938B6 /* SearchBlogNetwork.swift in Sources */,

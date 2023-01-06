@@ -7,9 +7,15 @@
 
 import RxSwift
 import RxCocoa
-
+import UIKit
 
 struct FilterViewModel {
-    let srtButtonTapped = PublishRelay<Void>()
+    let sortButtonTapped = PublishRelay<Void>()
+    let shouldUpdateType: Observable<Void>
+    
+    init() {
+        self.shouldUpdateType = sortButtonTapped
+            .asObservable()
+    }
     
 }
