@@ -30,7 +30,10 @@ struct MainModel {
         return error.message
     }
     
-    func getBlogListCellData(_ value: DKBlog) -> [BlogListCellData] {
+    func getBlogListCellData(_ value: DKBlog?) -> [BlogListCellData] {
+        guard let value = value else {
+            return []
+        }
         return value.documents
             .map { doc in
                 let thumbnailURL = URL(string: doc.thumbnail ?? "")
