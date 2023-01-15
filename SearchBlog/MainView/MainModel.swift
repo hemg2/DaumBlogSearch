@@ -41,7 +41,7 @@ struct MainModel {
             }
     }
     
-    func sort(by type: MainViewContoller.AlertAction, of data: [BlogListCellData]) -> [BlogListCellData] {
+    func sort(by type: MainViewController.AlertAction, of data: [BlogListCellData]) -> [BlogListCellData] {
         switch type {
         case .title:
             return data.sorted { $0.tilte ?? "" < $1.tilte ?? "" }

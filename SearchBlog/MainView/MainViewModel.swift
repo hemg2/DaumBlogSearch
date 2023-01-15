@@ -16,10 +16,10 @@ struct MainViewModel {
     let blogListViewModel = BlogListViewModel()
     let searchBarViewModel = SearchBarViewModel()
     
-    let alertActionTapped = PublishRelay<MainViewContoller.AlertAction>()
+    let alertActionTapped = PublishRelay<MainViewController.AlertAction>()
     //    알럿을 전달해준다
     
-    let shouldPresentAlert: Signal<MainViewContoller.Alert>
+    let shouldPresentAlert: Signal<MainViewController.Alert>
     
     init(model: MainModel = MainModel()) {
         let blogResult = searchBarViewModel.shouldLoadResult
@@ -58,7 +58,7 @@ struct MainViewModel {
             .disposed(by: disposBag)
         
         let alertSheetForSorting = blogListViewModel.filterViewModel.sortButtonTapped
-            .map { _ -> MainViewContoller.Alert in
+            .map { _ -> MainViewController.Alert in
                 return (title: nil, message: nil, actions: [.title, .datetime, .cancel], style: .actionSheet)
             }
         
@@ -66,7 +66,7 @@ struct MainViewModel {
             .do(onNext: { message in
                 print("error: \(message ?? "")")
             })
-            .map { _ -> MainViewContoller.Alert in
+            .map { _ -> MainViewController.Alert in
                 return (
                     title: "앗!",
                     message: "예상치 못한 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",

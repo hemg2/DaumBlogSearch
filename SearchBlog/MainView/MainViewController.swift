@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 
 
-final class MainViewContoller: UIViewController {
+final class MainViewController: UIViewController {
     let disposeBag = DisposeBag() //할당
     let searchBar = SearchBar()
     let listView = BlogListView()
@@ -69,7 +69,7 @@ final class MainViewContoller: UIViewController {
 
 
 
-extension MainViewContoller {
+extension MainViewController {
     typealias Alert = (title: String?, message: String?, actions: [AlertAction], style: UIAlertController.Style)
     
     enum AlertAction: AlertActionConvertible {
