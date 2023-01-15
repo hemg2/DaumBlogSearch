@@ -49,24 +49,37 @@ struct MainViewModel {
         
         
         Observable
-            .combineLatest(sortedType, cellData, resultSelector: (model.sort))
-        .bind(to: blogListViewModel.blogCellData)
-        .disposed(by: disposBag)
+            .combineLatest(
+                sortedType,
+                cellData,
+                resultSelector: model.sort
+            )
+            .bind(to: blogListViewModel.blogCellData)
+            .disposed(by: disposBag)
         
-        
-        let alertShhetForSorting =
-        blogListViewModel.filterViewModel.sortButtonTapped
+        let alertSheetForSorting = blogListViewModel.filterViewModel.sortButtonTapped
             .map { _ -> MainViewContoller.Alert in
                 return (title: nil, message: nil, actions: [.title, .datetime, .cancel], style: .actionSheet)
             }
         
         let alertForErrorMessage = blogError
-            . map { message -> MainViewContoller.Alert in
-                return (title: "앗!", message: "예상치 못한 오류가 발생했습니다. 잠시후 다시 시도 해주세요. \(message)",
-                        actions: [.confirm],
-                        style: .alert)
+            .do(onNext: { message in
+                print("error: \(message ?? "")")
+            })
+            .map { _ -> MainViewContoller.Alert in
+                return (
+                    title: "앗!",
+                    message: "예상치 못한 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
+                    actions: [.confirm],
+                    style: .alert
+                )
             }
-        self.shouldPresentAlert = Observable.merge(alertShhetForSorting, alertForErrorMessage)
+        
+        self.shouldPresentAlert = Observable
+            .merge(
+                alertSheetForSorting,
+                alertForErrorMessage
+            )
             .asSignal(onErrorSignalWith: .empty())
     }
 }
