@@ -37,14 +37,14 @@ struct MainModel {
         return value.documents
             .map { doc in
                 let thumbnailURL = URL(string: doc.thumbnail ?? "")
-                return BlogListCellData(thumbnailURL: thumbnailURL, name: doc.name, tilte: doc.title, datetime: doc.datetime)
+                return BlogListCellData(thumbnailURL: thumbnailURL, name: doc.name, title: doc.title, datetime: doc.datetime)
             }
     }
     
     func sort(by type: MainViewController.AlertAction, of data: [BlogListCellData]) -> [BlogListCellData] {
         switch type {
         case .title:
-            return data.sorted { $0.tilte ?? "" < $1.tilte ?? "" }
+            return data.sorted { $0.title ?? "" < $1.title ?? "" }
         case .datetime:
             return data.sorted { $0.datetime ?? Date() > $1.datetime ?? Date() }
         default:

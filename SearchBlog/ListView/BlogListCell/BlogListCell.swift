@@ -61,7 +61,7 @@ final class BlogListCell: UITableViewCell {
         
         thumbnailImageView.kf.setImage(with: data.thumbnailURL, placeholder: UIImage(systemName: "photo"))
         nameLabel.text = data.name
-        titleLabel.text = data.tilte
+        titleLabel.text = data.title
         
         
         var datetime: String {
