@@ -31,6 +31,7 @@ final class MainViewContoller: UIViewController {
     func bind(_ viewModel: MainViewModel) {
         listView.bind(viewModel.blogListViewModel)
         searchBar.bind(viewModel.searchBarViewModel)
+        
         viewModel.shouldPresentAlert
             .flatMapLatest { alert -> Signal<AlertAction> in
                 let alertController = UIAlertController(title: alert.title, message: alert.message, preferredStyle: alert.style)
@@ -61,9 +62,9 @@ final class MainViewContoller: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//    }
 }
 
 
